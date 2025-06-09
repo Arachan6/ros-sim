@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="brazo_5links">
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder length="0.1" radius="0.05"/></geometry>
+      <material><color rgba="0.5 0.5 0.5 1.0"/></material>
+    </visual>
+  </link>
+
+  <xacro:property name="L" value="0.2"/>
+  <xacro:property name="R" value="0.02"/>
+
+  <xacro:macro name="add_link" params="i parent ang">
+    <link name="link_${i}">
+      <visual>
+        <geometry><cylinder length="${L}" radius="${R}"/></geometry>
+        <material><color rgba="0.2 0.2 1 1"/></material>
+      </visual>
+    </link>
+    <joint name="joint_${i}" type="fixed">
+      <parent link="${parent}"/>
+      <child link="link_${i}"/>
+      <origin xyz="0 0 ${L}" rpy="${ang} 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- 5 links -->
+  <xacro:add_link i="1" parent="base_link" ang=".1"/>
+  <xacro:add_link i="2" parent="link_1" ang=".2"/>
+  <xacro:add_link i="3" parent="link_2" ang=".3"/>
+  <xacro:add_link i="4" parent="link_3" ang=".4"/>
+  <xacro:add_link i="5" parent="link_4" ang=".5"/>
+</robot>
